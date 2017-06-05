@@ -1,0 +1,223 @@
+package estrcturadedatos;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class TriquiConsola {
+
+    public void triconsol() {
+        int x, y, i, Opcion;
+        String Jugador;
+        Random rnd = new Random();
+        char Matriz[][] = new char[3][3];
+        Scanner Entrada = new Scanner(System.in);
+        System.out.println("BIENVENIDO AL JUEGO TRIQUI\n\n"
+                + "Por favor lea detenidamente el siguiente menu\n\n"
+                + "Â¿En que modo desea jugar?\n"
+                + "1. Contra el pc\n"
+                + "2. Multijugador\n"
+                + "3. Salir\n");
+        do {
+            System.out.print("Por favor ingrese la opcion que desea realizar: ");
+            Opcion = Entrada.nextInt();//Se ingresa la opcion del usuario
+            if (Opcion != 1 && Opcion != 2 && Opcion != 3) {
+                System.out.println("\nLa opcion que ingreso no es valida, por favor lea nuevamente el menu");//Si el usuario no escoje la opcion 1,2 o 3, volver a escojer
+            }
+        } while (Opcion != 1 && Opcion != 2 && Opcion != 3);//Repetir hasta que digite 1,2 o 3
+        if (Opcion == 1) { //si usuario digita 1
+
+            for (i = 0; i < 9; i++) {// i va hasta 9 porque son el maximo de jugadas en el juego
+                if (i % 2 == 0) {//turno del jugador 1
+                    do {
+                        System.out.println("\nJugador" + "\nIngrese la posicion en la que quiere jugar");
+                        do {
+                            System.out.print("Fila:");
+                            x = Entrada.nextInt();//Digita la fila donde quiere colocar la marca
+                            if (x < 0 || x > 2) {//va desde 0 hasta 2, pues es el limite del  triqui
+                                System.out.println("La fila ingresada es invalida, esta debe ser un numero de 0 a 2");//si no corresponde de (0 a 2) entonces volver a repetir hasta que la digite bien
+                            }
+                        } while (x < 0 || x > 2);
+                        do {
+                            System.out.print("Columna:");
+                            y = Entrada.nextInt();//Ingresa la columna
+                            if (y < 0 || y > 2) {
+                                System.out.println("La columna ingresada es invalida, esta debe ser un numero de 0 a 2");//si no corresponde de (0 a 2) entonces volver a repetir hasta que la digite bien
+                            }
+                        } while (y < 0 || y > 2);
+                        System.out.print("\n");
+                        if (Matriz[x][y] == 'O' || Matriz[x][y] == 'X') {//Si encuentra de que esta ocupada por X o O, entonces vuelva a preguntar por una nueva posicion
+                            System.out.println("La posicion a jugar se encuentra ocupada, por favor intente otra posicion");
+                        }
+                    } while (Matriz[x][y] == 'O' || Matriz[x][y] == 'X');//Repetir hasta que la casilla no este ocupada por X o O
+                } else {//Turno de la maquina
+                    do {
+                        x = (int) (rnd.nextDouble() * 3.0);//El random escoje una posicion que no pase del mazimo
+                        y = (int) (rnd.nextDouble() * 3.0);
+                        if (Matriz[x][y] == 'O' || Matriz[x][y] == 'X') {
+                            x = (int) (rnd.nextDouble() * 3.0);//El pc escoje una posicion
+                            y = (int) (rnd.nextDouble() * 3.0);
+                        }
+                    } while (Matriz[x][y] == 'O' || Matriz[x][y] == 'X');//si la posicion esta ocupada volver a ocupar otra hasta que este desocupada
+                }
+                if (i % 2 == 0) {//turno jugador1
+                    Matriz[x][y] = 'O';
+                } else {//turno de la maquina
+                    Matriz[x][y] = 'X';
+                }
+                for (x = 0; x < 3; x++) {
+                    for (y = 0; y < 3; y++) {
+                        System.out.print("[" + Matriz[x][y] + "]");//muestra la matriz segun lo que hallan puesto en cada posicion
+                    }
+                    System.out.print("\n");
+                }
+                System.out.print("\n");
+                if (Matriz[0][0] == 'X' && Matriz[0][0] == Matriz[0][1] && Matriz[0][1] == Matriz[0][2]) {
+                    System.out.print("El Ganador es el PC");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[0][0] == 'X' && Matriz[0][0] == Matriz[1][1] && Matriz[1][1] == Matriz[2][2]) {
+                    System.out.print("\nEl Ganador es el PC");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[0][0] == 'X' && Matriz[0][0] == Matriz[1][0] && Matriz[1][0] == Matriz[2][0]) {
+                    System.out.print("\nEl Ganador es el PC");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[2][0] == 'X' && Matriz[2][0] == Matriz[2][1] && Matriz[2][1] == Matriz[2][2]) {
+                    System.out.print("\nEl Ganador es el PC");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[2][0] == 'X' && Matriz[2][0] == Matriz[1][1] && Matriz[1][1] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el Â¨PC");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[2][2] == 'X' && Matriz[2][2] == Matriz[1][2] && Matriz[1][2] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el PC");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[1][0] == 'X' && Matriz[1][0] == Matriz[1][1] && Matriz[1][1] == Matriz[1][2]) {
+                    System.out.print("\nEl Ganador es el PC");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[0][1] == 'X' && Matriz[0][1] == Matriz[1][1] && Matriz[1][1] == Matriz[2][1]) {
+                    System.out.print("\nEl Ganador es el PC");//Valida la posicion de triqui
+                    i = 9;
+                }
+                if (Matriz[0][0] == 'O' && Matriz[0][0] == Matriz[0][1] && Matriz[0][1] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[0][0] == 'O' && Matriz[0][0] == Matriz[1][1] && Matriz[1][1] == Matriz[2][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[0][0] == 'O' && Matriz[0][0] == Matriz[1][0] && Matriz[1][0] == Matriz[2][0]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[2][0] == 'O' && Matriz[2][0] == Matriz[2][1] && Matriz[2][1] == Matriz[2][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[2][0] == 'O' && Matriz[2][0] == Matriz[1][1] && Matriz[1][1] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[2][2] == 'O' && Matriz[2][2] == Matriz[1][2] && Matriz[1][2] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[1][0] == 'O' && Matriz[1][0] == Matriz[1][1] && Matriz[1][1] == Matriz[1][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");//Valida la posicion de triqui
+                    i = 9;
+                } else if (Matriz[0][1] == 'O' && Matriz[0][1] == Matriz[1][1] && Matriz[1][1] == Matriz[2][1]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");//Valida la posicion de triqui
+                    i = 9;
+                }
+            }
+        } else if (Opcion == 2) {//Juego humano-humano
+
+            for (i = 0; i < 9; i++) {//i va hasta 9 porque son el numero maximo de jugadas
+                if (i % 2 == 0) {//turno jugador 1
+                    Jugador = "1 [O]";
+                } else {//turno jugador2
+                    Jugador = "2 [X]";
+                }
+                do {
+                    System.out.println("\nJugador " + Jugador + "\nIngrese la posicion en la que quiere jugar");
+                    do {
+                        System.out.print("Fila:");
+                        x = Entrada.nextInt();
+                        if (x < 0 || x > 2) {
+                            System.out.println("La fila ingresada es invalida, esta debe ser un numero de 0 a 2");
+                        }
+                    } while (x < 0 || x > 2);
+                    do {
+                        System.out.print("Columna:");
+                        y = Entrada.nextInt();
+                        if (y < 0 || y > 2) {
+                            System.out.println("La columna ingresada es invalida, esta debe ser un numero de 0 a 2");
+                        }
+                    } while (y < 0 || y > 2);
+                    System.out.print("\n");
+                    if (Matriz[x][y] == 'O' || Matriz[x][y] == 'X') {
+                        System.out.println("La posicion a jugar se encuentra ocupada, por favor intente otra posicion");
+                    }
+                } while (Matriz[x][y] == 'O' || Matriz[x][y] == 'X');
+                if (i % 2 == 0) {
+                    Matriz[x][y] = 'O';
+                } else {
+                    Matriz[x][y] = 'X';
+                }
+                for (x = 0; x < 3; x++) {
+                    for (y = 0; y < 3; y++) {
+                        System.out.print("[" + Matriz[x][y] + "]");
+                    }
+                    System.out.print("\n");
+                }
+                if (Matriz[0][0] == 'X' && Matriz[0][0] == Matriz[0][1] && Matriz[0][1] == Matriz[0][2]) {
+                    System.out.print("El Ganador es el jugador 2 ");
+                    i = 9;
+                } else if (Matriz[0][0] == 'X' && Matriz[0][0] == Matriz[1][1] && Matriz[1][1] == Matriz[2][2]) {
+                    System.out.print("\nEl Ganador es el jugador 2 ");
+                    i = 9;
+                } else if (Matriz[0][0] == 'X' && Matriz[0][0] == Matriz[1][0] && Matriz[1][0] == Matriz[2][0]) {
+                    System.out.print("\nEl Ganador es el jugador 2 ");
+                    i = 9;
+                } else if (Matriz[2][0] == 'X' && Matriz[2][0] == Matriz[2][1] && Matriz[2][1] == Matriz[2][2]) {
+                    System.out.print("\nEl Ganador es el jugador 2 ");
+                    i = 9;
+                } else if (Matriz[2][0] == 'X' && Matriz[2][0] == Matriz[1][1] && Matriz[1][1] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el jugador 2 ");
+                    i = 9;
+                } else if (Matriz[2][2] == 'X' && Matriz[2][2] == Matriz[1][2] && Matriz[1][2] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el jugador 2 ");
+                    i = 9;
+                } else if (Matriz[1][0] == 'X' && Matriz[1][0] == Matriz[1][1] && Matriz[1][1] == Matriz[1][2]) {
+                    System.out.print("\nEl Ganador es el jugador 2 ");
+                    i = 9;
+                } else if (Matriz[0][1] == 'X' && Matriz[0][1] == Matriz[1][1] && Matriz[1][1] == Matriz[2][1]) {
+                    System.out.print("\nEl Ganador es el jugador 2 ");
+                    i = 9;
+                }
+                if (Matriz[0][0] == 'O' && Matriz[0][0] == Matriz[0][1] && Matriz[0][1] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");
+                    i = 9;
+                } else if (Matriz[0][0] == 'O' && Matriz[0][0] == Matriz[1][1] && Matriz[1][1] == Matriz[2][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");
+                    i = 9;
+                } else if (Matriz[0][0] == 'O' && Matriz[0][0] == Matriz[1][0] && Matriz[1][0] == Matriz[2][0]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");
+                    i = 9;
+                } else if (Matriz[2][0] == 'O' && Matriz[2][0] == Matriz[2][1] && Matriz[2][1] == Matriz[2][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");
+                    i = 9;
+                } else if (Matriz[2][0] == 'O' && Matriz[2][0] == Matriz[1][1] && Matriz[1][1] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");
+                    i = 9;
+                } else if (Matriz[2][2] == 'O' && Matriz[2][2] == Matriz[1][2] && Matriz[1][2] == Matriz[0][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");
+                    i = 9;
+                } else if (Matriz[1][0] == 'O' && Matriz[1][0] == Matriz[1][1] && Matriz[1][1] == Matriz[1][2]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");
+                    i = 9;
+                } else if (Matriz[0][1] == 'O' && Matriz[0][1] == Matriz[1][1] && Matriz[1][1] == Matriz[2][1]) {
+                    System.out.print("\nEl Ganador es el jugador 1 ");
+                    i = 9;
+                }
+            }
+        } else if (Opcion == 3) {
+            System.out.print("\nUsted selecciono salir..."
+                    + "\nAdios.");
+        }
+
+    }
+
+}
