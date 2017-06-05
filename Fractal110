@@ -1,122 +1,30 @@
-package estrcturadedatos;
+public class Fractal {
 
-public class Fractal110 {
+    public void fractal() {
+        int n = 30;
+        int a[][] = new int[n][n];
+        int[] rule = {0, 1, 1, 0, 1, 1, 1, 0};//Regla 110 del automata celular
 
-    public static char convert(String d) {
-
-        char r = 'x';
-
-        if (d.equals("000")) {
-            r = '0';
-        } else if (d.equals("001")) {
-            r = '1';
-        } else if (d.equals("010")) {
-            r = '1';
-        } else if (d.equals("011")) {
-            r = '1';
-        } else if (d.equals("100")) {
-            r = '0';
-        } else if (d.equals("101")) {
-            r = '1';
-        } else if (d.equals("110")) {
-            r = '1';
-        } else if (d.equals("111")) {
-            r = '0';
+        for (int j = 0; j < n; j++) {
+            a[0][j] = Math.random() < 0.5 ? 0 : 1;//La primera fila va en random 
         }
 
-        return r;
-    }
+        for (int i = 1; i < n; i++) {//Despues de la segunda linea, los numeros son dirigidos segun la regla
+            for (int j = 0; j < n; j++) {
 
-    public static void main(String arg[]) {
+                if (j == 0) {//Se determina el lugar izquierdo del vector cuando no hay numeros
+                    a[i][j] = rule[(a[i - 1][j] * 2) + (a[i - 1][j + 1] * 1)];
 
-        int t, index, aux1, aux2, aux3;
-
-        String cad = "01011001110101110001101010111100011010101101010111100111010101010110";
-
-        //cad = raw_input(">> ")
-        t = cad.length();
-
-        index = t - 1;
-
-//print "longitud : ",t
-        String r = "";
-
-        for (int j = 0; j < 999999999; j++) {
-
-            aux1 = index;
-
-            // este debe ser longitud -1 , al iniciar
-            aux2 = index - index; // este debe ser 0 al iniciar
-
-            aux3 = index - (index - 1); // este debe ser 1 al iniciar
-
-            int cnt = 1;
-
-            r = "";
-
-            char[] cadx = cad.toCharArray();
-
-            for (int i = 0; i < cad.length(); i++) {
-
-                if (aux3 == t) {
-
-                    aux3 = 0;
-                }
-
-                char l = cadx[aux1];
-
-                char m = cadx[aux2];
-
-                char n = cadx[aux3];
-
-                //System.out.println(aux1+"-"+aux2+"-"+""+aux3);
-                String n1 = l + "" + m + "" + n;
-
-                if (cnt == 1) {
-
-                    aux1 = 0;
-
-                    aux2 = 1;
-
-                    aux3 = 2;
+                } else if (j == n - 1) {//Se determina el lugar derecho cuando no existen numeros
+                    a[i][j] = rule[(a[i - 1][j - 1] * 4) + (a[i - 1][j] * 2)];
                 } else {
-
-                    aux1 = aux1 + 1;
-
-                    aux2 = aux2 + 1;
-
-                    aux3 = aux3 + 1;
+                    a[i][j] = rule[(a[i - 1][j - 1] * 4) + (a[i - 1][j] * 2) + (a[i - 1][j + 1] * 1)];
                 }
 
-                cnt = cnt + 1;
-
-//        System.out.println(n1 + " - - " + convert(n1) );
-                r += "" + convert(n1);
-
+                System.out.print(a[i][j]);
             }
-
-            cad = r;
-
-            for (char c : r.toCharArray()) {
-
-                if (c == '0') {
-
-                    System.out.print(" ");
-
-                } else {
-
-                    System.out.print("*");
-
-                }
-
-            }
-
             System.out.println("");
-
-            //System.out.println(r);
         }
-
-//print r
     }
 
 }
